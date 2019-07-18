@@ -1,0 +1,28 @@
+@host = http://localhost:3001
+GET {{host}}/users
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "email": "1@1.com",
+  "password": "test"
+}
+
+@authToken = {{login.response.body.accessToken}}
+
+### Get user info
+GET {{host}}/users/1
+Authorization: Bearer {{authToken}}
+
+
+### Send score
+PATCH {{host}}/users/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "score": 100
+}
